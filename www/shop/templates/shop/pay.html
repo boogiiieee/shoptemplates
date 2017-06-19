@@ -1,0 +1,18 @@
+{% extends "shop/second.html" %}
+{% load thumbnail shop_tags %}
+
+{% block title %}Оплата заказа{% endblock %}
+
+{% block top %}
+	<div class="pay">
+		<h1>Оплата заказа</h1>
+		<form method="post" action="{{ form.target }}">
+			<table>
+				{{ form.as_table }}
+			</table>
+			<input class="but" type="submit" value="Оплатить" />
+		</form>
+		
+		{{ basket }}
+	</div>
+{% endblock %}

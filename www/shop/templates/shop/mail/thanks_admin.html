@@ -1,0 +1,7 @@
+{% extends "shop/mail/email.html" %}
+
+{% block content %}
+	Уведомление об оплате заказа <strong>№{{ obj.id }}</strong>.
+	<br/>
+	<a href="http://{{ domain }}/admin/shop/order/{{ obj.id }}/">Перейти к заказу</a>
+{% endblock %}

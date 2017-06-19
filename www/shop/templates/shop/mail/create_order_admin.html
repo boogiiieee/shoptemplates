@@ -1,0 +1,7 @@
+{% extends "shop/mail/email.html" %}
+
+{% block content %}
+	Новый заказ <strong>№{{ obj.id }}</strong> был принят.
+	<br/>
+	<a href="http://{{ domain }}/admin/shop/order/{{ obj.id }}/">Перейти к заказу</a>
+{% endblock %}

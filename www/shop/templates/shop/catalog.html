@@ -1,0 +1,51 @@
+{% extends "default.html" %}
+{% load thumbnail shop_tags %}
+
+{% block content %}
+	{% block top %}{% endblock %}
+
+	<div class="content_index">
+		<div class="metro">
+			{% block basket %}
+				<a href="/basket/">
+					<div id="basket" class="elm">
+						<div class="grad">&nbsp;</div>
+						<div class="toner">&nbsp;</div>
+						<div class="icon basket">&nbsp;</div>
+						<div class="title">Корзина</div>
+						<div class="link">подробнее</div>
+						<div class="clr">&nbsp;</div>
+						<div class="content">
+							{% if basket %}в корзине {{ basket.get_total_count }} ед. товара{% else %}корзина пуста{% endif %}
+						</div>
+					</div>
+				</a>
+			{% endblock %}
+			
+			{% block products %}
+				{% for item in items %}
+					<a class="buy_link" href="{{ item.get_absolute_url }}">
+						<div class="elm" style="background:{{ item.color }};width:{{ item.width }};height:{{ item.height }}">
+							<div class="toner">&nbsp;</div>
+							<div class="grad">&nbsp;</div>
+							<div class="icon">{{ item.icon }}</div>
+							<div class="title">
+								{{ item.title }}
+								<div class="price">за {{ item.get_cost|shop_intcomma }} руб.</div>
+							</div>
+							<div class="clr">&nbsp;</div>
+							<div class="content">{{ item.introduction|safe }}</div>
+							<div class="btn_min">
+								<div class="btn">
+									<div class="buy_slide"><div>ПОДРОБНЕЕ<br/><small>о товаре</small></div></div>
+									<div class="buy">&nbsp;</div>
+								</div>
+							</div>
+						</div>
+					</a>
+				{% endfor %}
+			{% endblock %}
+		</div>
+		<div class="clr">&nbsp;</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% load paginate shop_tags %}
+
+{% if is_paginated %}
+	{% paginate_split_list page_range page %}
+	<div class="paginate">
+		{% if paginate_page_range.1 %}
+			<a class="prev" href="{% get_url 'page' paginate_page_range.1 %}" title="Назад">« Назад</a>
+		{% endif %}
+		{% for interval,more in paginate_page_range.0 %}
+			{% for p in interval %}
+				{% ifequal p page %}
+					<span>{{ p }}</span>
+				{% else %}
+					<a href="{% get_url 'page' p %}" title="Страница {{ p }}">{{ p }}</a>
+				{% endifequal %}
+			{% endfor %}
+			{% if more %}&nbsp; ... &nbsp;{% endif %}
+		{% endfor %}
+		{% if paginate_page_range.2 %}
+			<a class="next" href="{% get_url 'page' paginate_page_range.2 %}" title="Вперед">Вперед »</a>
+		{% endif %}
+	</div>
+{% endif %}

@@ -1,0 +1,12 @@
+{% extends "default.html" %}
+
+{% block title %}{{ flatpage.title }}{% endblock %}
+{% block keywords %}{% endblock %}
+{% block description %}{% endblock %}
+
+{% block content %}
+	<div>
+		<h2>{{ flatpage.title }}</h2>
+		<div>{{ flatpage.content|safe }}</div>
+	</div>
+{% endblock %}

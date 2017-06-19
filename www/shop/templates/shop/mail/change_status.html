@@ -1,0 +1,5 @@
+{% extends "shop/mail/email.html" %}
+
+{% block content %}
+	Статус заказа <strong>№{{ obj.id }}</strong> был изменен на <strong>{{ obj.status }}</strong>.
+{% endblock %}

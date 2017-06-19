@@ -1,0 +1,25 @@
+{% extends "shop/catalog.html" %}
+{% load thumbnail shop_tags %}
+
+{% block title %}{% endblock %}
+
+{% block extra_media %}{% endblock %}
+
+{% block top %}{% endblock %}
+	
+{% block products %}
+	{% for item in items %}
+		<a class="buy_link" href="{{ item.get_absolute_url }}">
+			<div class="elm" style="background:{{ item.color }};width:{{ item.width }}">
+				<div class="toner">&nbsp;</div>
+				<div class="grad">&nbsp;</div>
+				<div class="icon">{{ item.icon }}</div>
+				<div class="title">
+					{{ item.title }}
+					<div class="price">за {{ item.get_cost|shop_intcomma }} руб.</div>
+				</div>
+				<div class="clr">&nbsp;</div>
+			</div>
+		</a>
+	{% endfor %}
+{% endblock %}

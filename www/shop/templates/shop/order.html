@@ -1,0 +1,120 @@
+{% extends "shop/second.html" %}
+{% load thumbnail shop_tags %}
+
+{% block title %}Ваш заказ{% endblock %}
+
+{% block extra_media %}
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/js_for_form.js"></script>
+
+	<script>
+		$(function() { 			
+			$('.order_bt').hover(
+				function() {
+					var $this = $(this);
+					$this.find('.buy_slide').stop(true,true).animate({'width':160}, {duration:500, easing:'swing'});
+				}, 
+				function() {
+					var $this = $(this);
+					$this.find('.buy_slide').stop(true,true).animate({'width':130}, {duration:500, easing:'swing'});
+				}
+			);
+		});
+	</script>
+{% endblock %}
+
+{% block top %}
+	<div class="content_page order">
+		{% if formset %}
+			{% if form %}
+				<h1>Шаг 1. Оформить заказ</h1>
+				<div class="oform">
+					<div class="zakaz">
+						<form name="order" action="?o" method="post">{% csrf_token %}
+							<table>
+								<tr>
+									<td class="{% if form.name.errors %}errorlist{% endif %}">
+										{% if form.name.errors %}<span>{{ form.name.errors }}</span>{% endif %}{{ form.name }}
+									</td>
+								</tr>
+								<tr>
+									<td class="{% if form.phone.errors %}errorlist{% endif %}">
+										{% if form.phone.errors %}<span>{{ form.phone.errors }}</span>{% endif %}{{ form.phone }}
+									</td>
+								</tr>
+								<tr>
+									<td class="{% if form.email.errors %}errorlist{% endif %}">
+										{% if form.email.errors %}<span>{{ form.email.errors }}</span>{% endif %}{{ form.email }}
+									</td>
+								</tr>
+								<tr>
+									<td class="{% if form.text.errors %}errorlist{% endif %}">
+										{% if form.text.errors %}<span>{{ form.text.errors }}</span>{% endif %}{{ form.text }}
+									</td>
+								</tr>
+								<tr>
+									<td class="{% if form.agreement.errors %}errorlist{% endif %}">
+										{% if form.agreement.errors %}<span>{{ form.agreement.errors }}</span>{% endif %}<b>{{ form.agreement.label }}</b> {{ form.agreement }}
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<i>Мы гарантируем, что ваши данные не будут использованы для рассылки нежелательной информации, и ни при каких условиях не будут переданы третьим лицам.</i>
+									</td>
+								</tr>
+							</table>
+						</form>
+					</div>
+					<div class="license">
+						<textarea readonly>{% include "shop/license.html" %}</textarea>
+					</div>
+					<div class="clr"></div>
+					
+					<a class="order_bt" href="#" onclick="$('.zakaz form').submit(); return false">
+						<div class="btn_min">
+							<div class="btn">
+								<div class="buy_slide"><div>ОТПРАВИТЬ<br/><small>оформить</small></div></div>
+								<div class="buy">&nbsp;</div>
+							</div>
+						</div>
+					</a>
+				</div>
+			{% endif %}
+			
+			<h1>Ваш заказа на сумму {{ basket.get_total_cost|shop_intcomma }} руб.</h1>
+			<div class="sostav">
+				<form name="sostav" action="?s" method="post">{% csrf_token %}
+					<table class="sostav">
+						{{ formset.management_form }}
+						{% for form in formset %}
+							{% ShopPrductById 'product_basket' form.product.value %}
+							<tr>
+								<td valign="top" width="30px"><b>{{ forloop.counter }}</b></td>
+								<td valign="top"><a href="{{ product_basket.get_absolute_url }}">{{ product_basket.title }}</a></td>
+								<td valign="top" width="150px"><span class="red">{{ form.count.errors }}</span> Количество {{ form.count }}</td>
+								<td valign="top" width="100px">Удалить {{ form.DELETE }}</td>
+								<td valign="top" class="price">{{ product_basket.get_cost|mult:form.count.value|shop_intcomma }} руб.</td>
+							</tr>
+							{% for hidden in form.hidden_fields %}{{ hidden }}{% endfor %}
+						{% endfor %}
+					</table>
+				</form>
+				
+				<a style="color:#333" href="/basket/clean/" onclick="return confirm('Вы уверены?')">Очистить корзину</a>
+				
+				<a class="order_bt" href="#" onclick="document.sostav.submit(); return false">
+					<div class="btn_min">
+						<div class="btn">
+							<div class="buy_slide"><div>СОХРАНИТЬ<br/><small>пересчитать</small></div></div>
+							<div class="buy">&nbsp;</div>
+						</div>
+					</div>
+				</a>
+			</div>
+		{% else %}
+			<h1>Корзина пуста</h1>
+			<div>
+				Выберите товар и добавьте его в корзину.
+			</div>
+		{% endif %}
+	</div>
+{% endblock %}

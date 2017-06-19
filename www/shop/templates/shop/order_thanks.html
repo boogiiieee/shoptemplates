@@ -1,0 +1,13 @@
+{% extends "shop/second.html" %}
+{% load thumbnail shop_tags %}
+
+{% block title %}Заказ оформлен{% endblock %}
+
+{% block top %}
+	<div class="content_page pay">
+		<h1>Шаг 3. Заказ №{{ b.id }} оформлен</h1>
+		<div>
+			Спасибо за заказ! Ваш заказ отправлен оператору. Наш оператор свяжется с Вами в ближайшее время.
+		</div>
+	</div>
+{% endblock %}

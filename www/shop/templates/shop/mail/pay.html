@@ -1,0 +1,5 @@
+{% extends "shop/mail/email.html" %}
+
+{% block content %}
+	Чтобы оплатить Ваш заказ перейдите по ссылке <a href="http://{{ domain }}/pay/?id={{ obj.id }}">http://{{ domain }}/pay/?id={{ obj.id }}</a>
+{% endblock %}
